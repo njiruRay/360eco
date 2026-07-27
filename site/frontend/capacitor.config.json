@@ -1,0 +1,8 @@
+{
+  "appId": "com.econovations.app",
+  "appName": "360 Econovations",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

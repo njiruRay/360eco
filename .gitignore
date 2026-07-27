@@ -1,0 +1,34 @@
+# ---- OS / IDE ----
+.idea/
+.vscode/
+.claude/
+.DS_Store
+Thumbs.db
+
+# ---- Dependencies / build output (nested .gitignore files also apply) ----
+node_modules/
+dist/
+dist-ssr/
+target/
+*.log
+
+# ---- Secrets / local env (keep .env.example tracked) ----
+.env
+.env.*
+!.env.example
+**/application-local.properties
+
+# ---- Non-site assets: design prototypes, business docs, media, guides ----
+# Only site/frontend and site/backend belong in this repo.
+/UI-UX Framework/
+/admin-dashboard/
+/Admin UI-UX/
+/04 - 360 Innovations/
+/.github/
+/index.html
+/*.md
+/*.docx
+/*.pptx
+/*.xlsx
+/*.mp4
+/*.png
