@@ -1,9 +1,12 @@
 import axios from 'axios'
 
-// Absolute API base URL. In the browser this can be relative, but the Android /
-// iOS Capacitor WebView cannot reach `localhost`, so we always resolve to an
-// absolute URL via VITE_API_URL (see .env). Falls back to the local dev server.
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
+// Absolute API base URL. The Android / iOS Capacitor WebView cannot reach
+// `localhost`, so every production build must set VITE_API_URL to the public API
+// (see .env.example). The localhost fallback is deliberately dev-only: baking it
+// into a production bundle would make every call fail as blocked mixed content
+// (HTTPS page -> HTTP request), which is confusing to diagnose.
+const baseURL =
+  import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8080/api' : '/api')
 
 const http = axios.create({
   baseURL,

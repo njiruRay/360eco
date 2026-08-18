@@ -21,7 +21,9 @@ const filtered = computed(() => {
   return list
 })
 
-onMounted(async () => {
+const load = async () => {
+  loading.value = true
+  error.value = false
   try {
     ;[products.value, categories.value] = await Promise.all([fetchProducts(), fetchCategories()])
   } catch (e) {
@@ -29,7 +31,9 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-})
+}
+
+onMounted(load)
 </script>
 
 <template>
@@ -109,7 +113,19 @@ onMounted(async () => {
         <p v-if="loading" class="text-on-surface-variant">Loading products…</p>
         <div v-else-if="error" class="bg-error-container text-on-error-container rounded-xl p-lg">
           <p class="font-headline-sm text-headline-sm mb-xs">Couldn't load products</p>
-          <p class="font-body-md">The catalogue API didn't respond. Make sure the backend is running (<code>cd backend &amp;&amp; mvnw spring-boot:run</code>) and that you're viewing the site at <code>http://localhost:5173</code>.</p>
+          <p class="font-body-md mb-md">We couldn't reach our catalogue just now. Please check your connection and try again.</p>
+          <div class="flex flex-wrap items-center gap-md">
+            <button
+              type="button"
+              @click="load"
+              class="bg-primary text-on-primary font-label-sm text-label-sm px-lg py-3 rounded-full"
+            >
+              Try again
+            </button>
+            <RouterLink to="/contact" class="font-label-sm text-label-sm font-bold hover:underline">
+              Contact us
+            </RouterLink>
+          </div>
         </div>
         <div v-else-if="filtered.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-md">
           <ProductCard v-for="p in filtered" :key="p.id" :product="p" />
