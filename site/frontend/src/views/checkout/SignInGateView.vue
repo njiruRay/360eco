@@ -39,11 +39,14 @@ async function doLogin() {
   error.value = ''
   try {
     await auth.login({ email: loginForm.email, password: loginForm.password })
-    router.replace(next())
+    // Eco Message splash covers the redirect and the lazy-loaded next view.
+    window.__ecoLoaderShow?.()
+    await router.replace(next())
   } catch (e) {
     error.value = e?.response?.data?.message || 'Login failed. Check your details.'
   } finally {
     busy.value = false
+    window.__ecoLoaderDone?.() // no-op if the splash was never shown
   }
 }
 
@@ -65,11 +68,14 @@ async function doRegister() {
       phone: registerForm.phone,
       password: registerForm.password,
     })
-    router.replace(next())
+    // A successful registration signs the user in, so show the splash here too.
+    window.__ecoLoaderShow?.()
+    await router.replace(next())
   } catch (e) {
     error.value = e?.response?.data?.message || 'Registration failed.'
   } finally {
     busy.value = false
+    window.__ecoLoaderDone?.() // no-op if the splash was never shown
   }
 }
 

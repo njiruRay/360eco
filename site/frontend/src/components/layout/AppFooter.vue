@@ -24,6 +24,7 @@ import MaterialIcon from '@/components/ui/MaterialIcon.vue'
             <li><RouterLink class="text-on-surface-variant font-label-sm hover:text-secondary" to="/services">Services</RouterLink></li>
             <li><RouterLink class="text-on-surface-variant font-label-sm hover:text-secondary" to="/about">About</RouterLink></li>
             <li><RouterLink class="text-on-surface-variant font-label-sm hover:text-secondary" to="/impact">Impact</RouterLink></li>
+            <li><RouterLink class="text-secondary font-label-sm font-bold hover:text-primary flex items-center gap-1" to="/eco-dino">Play Eco-Dino 🦖</RouterLink></li>
           </ul>
         </div>
         <div>

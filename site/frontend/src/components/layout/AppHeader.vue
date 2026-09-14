@@ -15,6 +15,7 @@ const nav = [
   { to: '/services', label: 'Services' },
   { to: '/about', label: 'About' },
   { to: '/impact', label: 'Impact' },
+  { to: '/eco-dino', label: 'Eco-Dino', icon: '🦖' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -41,10 +42,11 @@ function logout() {
           v-for="link in nav"
           :key="link.to"
           :to="link.to"
-          class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
           active-class="!text-primary font-bold border-b-2 border-primary pb-1"
         >
           {{ link.label }}
+          <span v-if="link.icon" aria-hidden="true">{{ link.icon }}</span>
         </RouterLink>
       </div>
 
@@ -95,11 +97,12 @@ function logout() {
           v-for="link in nav"
           :key="link.to"
           :to="link.to"
-          class="py-3 font-label-sm text-on-surface-variant"
+          class="flex items-center gap-1 py-3 font-label-sm text-on-surface-variant"
           active-class="!text-primary font-bold"
           @click="mobileOpen = false"
         >
           {{ link.label }}
+          <span v-if="link.icon" aria-hidden="true">{{ link.icon }}</span>
         </RouterLink>
         <RouterLink
           v-if="!auth.isAuthenticated"

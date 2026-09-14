@@ -41,6 +41,7 @@ const routes = [
     component: () => import('@/views/AccountView.vue'),
     meta: { requiresAuth: true },
   },
+  { path: '/eco-dino', name: 'eco-dino', component: () => import('@/views/EcoDinoView.vue') },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/views/NotFoundView.vue') },
 ]
 
