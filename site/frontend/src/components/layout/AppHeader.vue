@@ -30,19 +30,25 @@ function logout() {
     class="sticky top-0 z-50 bg-surface shadow-sm"
   >
     <div
-      class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-content mx-auto"
+      class="flex justify-between items-center w-full px-margin-mobile lg:px-margin-desktop py-4 max-w-content mx-auto"
     >
-      <RouterLink to="/" class="flex items-center gap-xs">
-        <img src="/logo.png" alt="360 Econovations logo" class="h-11 w-11 object-contain" />
-        <span class="font-display-lg-mobile text-headline-sm font-bold text-primary">360 ECONOVATIONS</span>
+      <RouterLink to="/" class="flex items-center gap-xs min-w-0">
+        <img src="/logo.png" alt="360 Econovations logo" class="h-11 w-11 shrink-0 object-contain" />
+        <!--
+          Hidden from md up to xl: the full nav plus the wordmark needs ~1060px of
+          content, so below xl the wordmark wraps into the nav and pushes Contact,
+          the cart and Sign In off screen. The logo mark carries the brand there.
+        -->
+        <span class="font-display-lg-mobile text-[17px] leading-tight break-words sm:text-headline-sm font-bold text-primary md:hidden xl:inline">360 ECONOVATIONS</span>
       </RouterLink>
 
-      <div class="hidden md:flex items-center gap-lg">
+      <!-- Tighter gaps between md and lg; the full 48px spacing only fits from lg up. -->
+      <div class="hidden md:flex items-center gap-sm lg:gap-lg">
         <RouterLink
           v-for="link in nav"
           :key="link.to"
           :to="link.to"
-          class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          class="inline-flex items-center gap-1 whitespace-nowrap font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
           active-class="!text-primary font-bold border-b-2 border-primary pb-1"
         >
           {{ link.label }}
@@ -64,7 +70,7 @@ function logout() {
         <RouterLink
           v-if="!auth.isAuthenticated"
           to="/checkout/sign-in"
-          class="hidden md:block font-label-sm text-label-sm px-6 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-on-primary transition-all"
+          class="hidden md:block whitespace-nowrap font-label-sm text-label-sm px-4 lg:px-6 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-on-primary transition-all"
         >
           Sign In
         </RouterLink>

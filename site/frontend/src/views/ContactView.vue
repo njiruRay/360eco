@@ -38,17 +38,19 @@ async function submit() {
       </p>
       <ul class="flex flex-col gap-md">
         <li class="flex items-center gap-sm text-on-surface-variant">
-          <span class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center"><MaterialIcon name="location_on" /></span>
+          <span class="w-10 h-10 shrink-0 rounded-full bg-primary/10 text-primary flex items-center justify-center"><MaterialIcon name="location_on" /></span>
           Embu County, Kenya
         </li>
         <li class="flex items-center gap-sm text-on-surface-variant">
-          <span class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center"><MaterialIcon name="mail" /></span>
-          hello@360econovations.com
+          <span class="w-10 h-10 shrink-0 rounded-full bg-primary/10 text-primary flex items-center justify-center"><MaterialIcon name="mail" /></span>
+          <!-- One unbreakable 25-char token; without break-all it sets the
+               column's min-width and pushes the page wide on small phones. -->
+          <span class="min-w-0 break-all">hello@360econovations.com</span>
         </li>
       </ul>
     </div>
 
-    <div class="bg-surface-container-lowest rounded-xl p-lg shadow-low">
+    <div class="bg-surface-container-lowest rounded-xl p-md sm:p-lg shadow-low">
       <div v-if="status === 'sent'" class="flex flex-col items-center text-center py-lg">
         <span class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-md"><MaterialIcon name="check_circle" filled /></span>
         <h3 class="font-headline-sm text-headline-sm mb-xs">Message sent</h3>
