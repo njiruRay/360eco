@@ -1,0 +1,11 @@
+target/
+.mvn/
+mvnw
+mvnw.cmd
+HELP.md
+db-setup.sql
+.idea/
+.vscode/
+*.iml
+# Local DB credentials — never ship into the image
+src/main/resources/application-local.properties
