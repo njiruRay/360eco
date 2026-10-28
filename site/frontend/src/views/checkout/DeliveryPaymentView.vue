@@ -25,7 +25,6 @@ const locationSection = ref(null)
 
 const paymentOptions = [
   { value: 'cash_on_delivery', label: 'Cash on Delivery', icon: 'local_shipping' },
-  { value: 'cash_in_person', label: 'Cash in Person', icon: 'storefront' },
   { value: 'bitcoin', label: 'Bitcoin', icon: 'currency_bitcoin' },
 ]
 
@@ -143,7 +142,7 @@ async function placeOrder() {
             <span class="font-body-md">{{ opt.label }}</span>
           </label>
         </div>
-        <p class="text-on-surface-variant font-body-md text-[13px] mt-md">No online payment — pay with cash on delivery / in person, or Bitcoin by arrangement.</p>
+        <p class="text-on-surface-variant font-body-md text-[13px] mt-md">No online payment — pay with cash on delivery, or Bitcoin by arrangement.</p>
       </div>
 
       <p v-if="error" class="text-error font-body-md">{{ error }}</p>

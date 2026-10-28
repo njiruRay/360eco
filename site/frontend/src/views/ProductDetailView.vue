@@ -128,7 +128,7 @@ watch(() => route.params.slug, load)
           </ul>
           <div v-else>
             <p class="mb-xs">Delivery across Kenya. Delivery fee shown at checkout.</p>
-            <p><strong class="text-on-surface">Payment:</strong> Cash on Delivery or Cash in Person. Bitcoin also accepted.</p>
+            <p><strong class="text-on-surface">Payment:</strong> Cash on Delivery. Bitcoin also accepted.</p>
           </div>
         </div>
       </div>

@@ -34,6 +34,7 @@ function toOrder(o) {
     deliveryFee: o.delivery_fee,
     totalAmount: o.total_amount,
     createdAt: o.created_at,
+    whatsappSentAt: o.whatsapp_sent_at,
     items: (o.order_items || []).map((i) => ({
       productName: i.product_name,
       unitPrice: i.unit_price,
@@ -58,6 +59,13 @@ export async function fetchMyOrders() {
 
 export async function fetchOrder(reference) {
   const order = unwrap(await supabase.rpc('track_order', { p_reference: reference }))
+  if (!order) throw apiError(`Order not found: ${reference}`, 404)
+  return order
+}
+
+// Called when the customer taps "Send on WhatsApp" — that's what confirms the order.
+export async function confirmOrderWhatsApp(reference) {
+  const order = unwrap(await supabase.rpc('confirm_order_whatsapp', { p_reference: reference }))
   if (!order) throw apiError(`Order not found: ${reference}`, 404)
   return order
 }
