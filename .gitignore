@@ -24,7 +24,8 @@ target/
 /admin-dashboard/
 /Admin UI-UX/
 /04 - 360 Innovations/
-/.github/
+/.github/*
+!/.github/workflows/
 /index.html
 /*.md
 /*.docx
