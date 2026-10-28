@@ -1,21 +1,17 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import MobileBottomNav from '@/components/layout/MobileBottomNav.vue'
 import { useAuthStore } from '@/stores/auth'
 
-const auth = useAuthStore()
+// Creating the store restores any saved Supabase session and loads the profile.
+useAuthStore()
 const route = useRoute()
 
 // Footer is hidden on the home/landing page, shown everywhere else.
 const showFooter = computed(() => route.name !== 'home')
-
-onMounted(() => {
-  // Validate any stored token and refresh the profile.
-  auth.refreshMe()
-})
 </script>
 
 <template>

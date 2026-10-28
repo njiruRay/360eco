@@ -30,7 +30,8 @@ function switchMode(m) {
   info.value = ''
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await auth.ready
   if (auth.isAuthenticated) router.replace(next())
 })
 
@@ -62,12 +63,19 @@ async function doRegister() {
   }
   busy.value = true
   try {
-    await auth.register({
+    const signedIn = await auth.register({
       fullName: registerForm.fullName,
       email: registerForm.email,
       phone: registerForm.phone,
       password: registerForm.password,
     })
+    if (!signedIn) {
+      // Email confirmation is switched on in Supabase: no session until confirmed.
+      loginForm.email = registerForm.email
+      switchMode('login')
+      info.value = 'Account created. Check your email to confirm it, then sign in.'
+      return
+    }
     // A successful registration signs the user in, so show the splash here too.
     window.__ecoLoaderShow?.()
     await router.replace(next())
@@ -118,6 +126,7 @@ async function doForgot() {
         <div class="flex justify-end -mt-xs">
           <button type="button" class="text-primary font-label-sm text-[13px] hover:underline" @click="switchMode('forgot')">Forgot password?</button>
         </div>
+        <p v-if="info" class="text-primary font-body-md bg-primary/5 border border-primary/20 rounded-lg p-md">{{ info }}</p>
         <p v-if="error" class="text-error font-body-md">{{ error }}</p>
         <button type="submit" :disabled="busy" class="bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-full disabled:opacity-50">{{ busy ? 'Signing in…' : 'Sign In' }}</button>
       </form>

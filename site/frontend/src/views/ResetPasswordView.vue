@@ -1,11 +1,14 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { resetPassword } from '@/api/auth'
+import { useAuthStore } from '@/stores/auth'
 import MaterialIcon from '@/components/ui/MaterialIcon.vue'
 
-const route = useRoute()
-const token = ref('')
+const auth = useAuthStore()
+// Opening the emailed link signs the user in with a short-lived recovery
+// session (Supabase reads it from the URL); without one there's nothing to reset.
+const canReset = ref(false)
 const form = reactive({ password: '', confirmPassword: '' })
 const showPw = ref(false)
 const showConfirm = ref(false)
@@ -13,14 +16,15 @@ const busy = ref(false)
 const error = ref('')
 const done = ref(false)
 
-onMounted(() => {
-  token.value = route.query.token || ''
-  if (!token.value) error.value = 'This reset link is missing its token. Please use the link from your email, or request a new one.'
+onMounted(async () => {
+  await auth.ready
+  canReset.value = auth.isAuthenticated
+  if (!canReset.value) error.value = 'This reset link is invalid or has expired. Please request a new one from the sign-in page.'
 })
 
 async function submit() {
   error.value = ''
-  if (!token.value) return
+  if (!canReset.value) return
   if (form.password.length < 6) {
     error.value = 'Password must be at least 6 characters.'
     return
@@ -31,7 +35,9 @@ async function submit() {
   }
   busy.value = true
   try {
-    await resetPassword(token.value, form.password)
+    await resetPassword(form.password)
+    // End the recovery session so the "sign in with your new password" step is real.
+    await auth.logout()
     done.value = true
   } catch (e) {
     error.value = e?.response?.data?.message || 'Could not reset your password. The link may have expired.'
@@ -68,7 +74,7 @@ async function submit() {
           </button>
         </div>
         <p v-if="error" class="text-error font-body-md">{{ error }}</p>
-        <button type="submit" :disabled="busy || !token" class="bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-full disabled:opacity-50">{{ busy ? 'Resetting…' : 'Reset password' }}</button>
+        <button type="submit" :disabled="busy || !canReset" class="bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-full disabled:opacity-50">{{ busy ? 'Resetting…' : 'Reset password' }}</button>
         <RouterLink to="/checkout/sign-in" class="text-center text-primary font-label-sm text-label-sm hover:underline">Back to sign in</RouterLink>
       </form>
     </div>

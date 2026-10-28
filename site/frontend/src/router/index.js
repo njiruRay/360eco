@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 // Route-level code splitting: each storefront page is lazy-loaded.
 const routes = [
@@ -52,10 +53,11 @@ const router = createRouter({
 })
 
 // Redirect unauthenticated users away from protected routes to the sign-in gate.
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   if (to.meta.requiresAuth) {
-    const token = localStorage.getItem('auth_token')
-    if (!token) {
+    const auth = useAuthStore()
+    await auth.ready
+    if (!auth.isAuthenticated) {
       return { name: 'checkout-sign-in', query: { redirect: to.fullPath } }
     }
   }
