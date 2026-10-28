@@ -14,8 +14,8 @@ export const useCartStore = defineStore('cart', () => {
   )
 
   function add(product, quantity = 1) {
-    // Mirror the backend's min_order_qty rule client-side so a line can never
-    // be added below the product minimum (the API rejects such orders at checkout).
+    // Mirror place_order()'s min_order_qty rule client-side so a line can never
+    // be added below the product minimum (the database rejects such orders at checkout).
     const min = Number(product.minOrderQty) || 1
     const existing = items.value.find((i) => i.productId === product.id)
     if (existing) {

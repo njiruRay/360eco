@@ -5,7 +5,7 @@ import { fetchImpact, fetchContent } from '@/api/content'
 
 const impact = ref(null)
 // Hero video URL comes from the DB (page_content home/hero) via the content API;
-// falls back to the bundled asset if the backend is unreachable.
+// falls back to the bundled asset if Supabase is unreachable.
 const heroVideo = ref('/glass-hero.mp4')
 
 onMounted(async () => {

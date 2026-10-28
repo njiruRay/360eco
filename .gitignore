@@ -19,7 +19,7 @@ target/
 **/application-local.properties
 
 # ---- Non-site assets: design prototypes, business docs, media, guides ----
-# Only site/frontend and site/backend belong in this repo.
+# Only site/frontend and site/supabase belong in this repo.
 /UI-UX Framework/
 /admin-dashboard/
 /Admin UI-UX/
